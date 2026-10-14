@@ -17,7 +17,8 @@ footer = (SRC / "partials" / "footer.html").read_text().replace("{{year}}", year
 playbooks = json.loads((SRC / "playbooks.json").read_text())
 
 # Runs before paint so gated content never flashes for visitors without access.
-HEAD_GATE = """<script>try{if(!localStorage.getItem('phm_playbooks_access'))document.documentElement.classList.add('locked')}catch(e){document.documentElement.classList.add('locked')}</script>"""
+# A form that redirects back with ?access=1 (e.g. the GHL form's redirect URL) grants access.
+HEAD_GATE = """<script>(function(){var k='phm_playbooks_access',d=document.documentElement;try{if(/[?&]access=1\\b/.test(location.search)){localStorage.setItem(k,'1');history.replaceState(null,'',location.pathname)}if(!localStorage.getItem(k))d.classList.add('locked')}catch(e){if(!/[?&]access=1\\b/.test(location.search))d.classList.add('locked')}})()</script>"""
 
 GATE_FORM = """
 <form class="gate-form" novalidate>
