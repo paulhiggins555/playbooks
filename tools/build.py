@@ -18,7 +18,8 @@ playbooks = json.loads((SRC / "playbooks.json").read_text())
 
 # Runs before paint so gated content never flashes for visitors without access.
 # A form that redirects back with ?access=1 (e.g. the GHL form's redirect URL) grants access.
-HEAD_GATE = """<script>(function(){var k='phm_playbooks_access',d=document.documentElement;try{if(/[?&]access=1\\b/.test(location.search)){localStorage.setItem(k,'1');history.replaceState(null,'',location.pathname)}if(!localStorage.getItem(k))d.classList.add('locked')}catch(e){if(!/[?&]access=1\\b/.test(location.search))d.classList.add('locked')}})()</script>"""
+# ?access=0 clears it, for testing the gate again.
+HEAD_GATE = """<script>(function(){var k='phm_playbooks_access',d=document.documentElement;try{if(/[?&]access=0\\b/.test(location.search))localStorage.removeItem(k);if(/[?&]access=1\\b/.test(location.search)){localStorage.setItem(k,'1');history.replaceState(null,'',location.pathname)}if(!localStorage.getItem(k))d.classList.add('locked')}catch(e){if(!/[?&]access=1\\b/.test(location.search))d.classList.add('locked')}})()</script>"""
 
 GHL_SCRIPT = '<script src="https://link.msgsndr.com/js/form_embed.js"></script>'
 

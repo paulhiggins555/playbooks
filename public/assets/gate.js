@@ -1,6 +1,11 @@
 (function () {
   var KEY = 'phm_playbooks_access';
 
+  // ?access=0 forgets access so the gate can be tested again.
+  if (/[?&]access=0\b/.test(location.search)) {
+    try { localStorage.removeItem(KEY); } catch (e) { /* storage blocked: nothing stored */ }
+  }
+
   function hasAccess() {
     try { return !!localStorage.getItem(KEY); } catch (e) { return false; }
   }
