@@ -31,7 +31,7 @@ def ghl_form(p):
     return f"""<iframe src="https://api.leadconnectorhq.com/widget/form/{fid}" class="ghl-form"
     id="inline-{fid}" data-layout="{{'id':'INLINE'}}" data-trigger-type="alwaysShow" data-trigger-value=""
     data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate"
-    data-deactivation-value="" data-form-name="{name}" data-height="400" data-layout-iframe-id="inline-{fid}"
+    data-deactivation-value="" data-form-name="{name}" data-height="280" data-layout-iframe-id="inline-{fid}"
     data-form-id="{fid}" data-cookie-consent="true" data-cookie-consent-provider="auto" title="{name}"></iframe>"""
 
 
