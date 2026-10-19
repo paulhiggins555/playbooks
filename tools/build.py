@@ -20,20 +20,21 @@ playbooks = json.loads((SRC / "playbooks.json").read_text())
 # A form that redirects back with ?access=1 (e.g. the GHL form's redirect URL) grants access.
 HEAD_GATE = """<script>(function(){var k='phm_playbooks_access',d=document.documentElement;try{if(/[?&]access=1\\b/.test(location.search)){localStorage.setItem(k,'1');history.replaceState(null,'',location.pathname)}if(!localStorage.getItem(k))d.classList.add('locked')}catch(e){if(!/[?&]access=1\\b/.test(location.search))d.classList.add('locked')}})()</script>"""
 
-GATE_FORM = """
-<form class="gate-form" novalidate>
-  <h2>{heading}</h2>
-  <p>{blurb}</p>
-  <label>First name<input type="text" name="name" autocomplete="given-name" required></label>
-  <label>Email<input type="email" name="email" autocomplete="email" required></label>
-  <input type="text" name="company" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-  <input type="hidden" name="playbook" value="{slug}">
-  <button type="submit" class="btn">Get the playbook</button>
-  <p class="form-error" role="alert" hidden></p>
-</form>"""
+GHL_SCRIPT = '<script src="https://link.msgsndr.com/js/form_embed.js"></script>'
 
 
-def page(title, description, body, gated=False):
+def ghl_form(p):
+    """GoHighLevel form as an inline embed. Set each form's redirect in GHL to
+    /playbooks/<slug>/?access=1 so submitting unlocks the playbook."""
+    fid, name = p["ghl_form_id"], html.escape(p["title"])
+    return f"""<iframe src="https://api.leadconnectorhq.com/widget/form/{fid}" class="ghl-form"
+    id="inline-{fid}" data-layout="{{'id':'INLINE'}}" data-trigger-type="alwaysShow" data-trigger-value=""
+    data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate"
+    data-deactivation-value="" data-form-name="{name}" data-height="400" data-layout-iframe-id="inline-{fid}"
+    data-form-id="{fid}" data-cookie-consent="true" data-cookie-consent-provider="auto" title="{name}"></iframe>"""
+
+
+def page(title, description, body, gated=False, extra=""):
     e = html.escape
     return f"""<!doctype html>
 <html lang="en">
@@ -51,6 +52,7 @@ def page(title, description, body, gated=False):
 {body}
 </main>
 {footer}
+{extra}
 <script src="/assets/gate.js" defer></script>
 </body>
 </html>
@@ -81,12 +83,17 @@ def build_index():
 </section>
 <dialog class="gate-modal" id="gate-modal">
   <button class="modal-close" type="button" aria-label="Close">&times;</button>
-  {GATE_FORM.format(heading="Get free access to the playbooks", blurb="Enter your name and email to read every playbook and get new ones as they are published.", slug="")}
+  <h2>Access the playbook</h2>
+  <p>Enter your details to read it. You will also get new playbooks as they are published.</p>
+{{forms}}
 </dialog>"""
+    forms = "\n".join(f'<div class="modal-form" data-slug="{p["slug"]}" hidden>{ghl_form(p)}</div>' for p in playbooks)
+    body = body.replace("{forms}", forms)
     write("playbooks/index.html", page(
         "Playbooks | Paul Higgins Mentoring",
         "Free step-by-step playbooks for SaaS partners from Paul Higgins Mentoring.",
         body,
+        extra=GHL_SCRIPT,
     ))
 
 
@@ -102,7 +109,9 @@ def build_playbook(p):
 </section>
 <section class="section pb-gate">
   <div class="wrap narrow">
-    {GATE_FORM.format(heading="Enter your details to read this playbook", blurb="Free access. You will also get new playbooks as they are published.", slug=p['slug'])}
+    <h2>Enter your details to read this playbook</h2>
+    <p>Free access. You will also get new playbooks as they are published.</p>
+    {ghl_form(p)}
   </div>
 </section>
 <section class="section pb-content">
@@ -111,7 +120,7 @@ def build_playbook(p):
   </div>
 </section>"""
     write(f"playbooks/{p['slug']}/index.html", page(
-        f"{p['title']} Playbook | Paul Higgins Mentoring", p["summary"], body, gated=True,
+        f"{p['title']} Playbook | Paul Higgins Mentoring", p["summary"], body, gated=True, extra=GHL_SCRIPT,
     ))
 
 

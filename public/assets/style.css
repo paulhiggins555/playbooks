@@ -59,16 +59,10 @@ a { color: var(--accent); }
 .card p { margin: 0 0 16px; color: var(--muted); }
 .card-cta { color: var(--accent); font-weight: 600; }
 
-/* Gate form */
-.gate-form { display: grid; gap: 14px; max-width: 460px; }
-.gate-form h2 { margin: 0; line-height: 1.25; }
-.gate-form p { margin: 0; color: var(--muted); }
-.gate-form label { display: grid; gap: 4px; font-weight: 600; font-size: 0.95rem; }
-.gate-form input { font: inherit; padding: 10px 12px; border: 1px solid #bbb; border-radius: 4px; }
-.gate-form .hp { position: absolute; left: -9999px; }
-.btn { font: inherit; font-weight: 600; background: var(--brand); color: #fff; border: 0; border-radius: 4px; padding: 12px 20px; cursor: pointer; }
-.btn:disabled { opacity: .7; }
-.form-error { color: #b00020 !important; }
+/* Gate (GHL form embeds) */
+.ghl-form { width: 100%; min-height: 520px; border: none; border-radius: 8px; display: block; }
+.pb-gate h2, .gate-modal h2 { margin: 0 0 8px; line-height: 1.25; }
+.pb-gate p, .gate-modal > p { margin: 0 0 16px; color: var(--muted); }
 .gate-modal { border: 0; border-radius: 8px; padding: 32px; width: min(520px, calc(100% - 32px)); }
 .gate-modal::backdrop { background: rgba(0,0,0,.5); }
 .modal-close { position: absolute; top: 8px; right: 12px; background: none; border: 0; font-size: 1.8rem; cursor: pointer; color: var(--muted); }
