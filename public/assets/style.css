@@ -90,3 +90,9 @@ a { color: var(--accent); }
 .prose th { background: var(--bg-alt); }
 .prose td p, .prose th p { margin: 0 0 .5em; }
 .prose td p:last-child, .prose th p:last-child { margin-bottom: 0; }
+.callout { background: var(--bg-alt); border-left: 4px solid var(--brand); border-radius: 4px; padding: 16px 20px; margin: 1.5em 0; }
+.callout p { margin: 0 0 .5em; }
+.callout p:last-child { margin-bottom: 0; }
+.prose ul.checklist { list-style: none; padding-left: 0; }
+.prose ul.checklist li { padding-left: 1.6em; position: relative; }
+.prose ul.checklist li::before { content: "\2610"; position: absolute; left: 0; }
