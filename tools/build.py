@@ -74,7 +74,7 @@ def build_index():
     )
     body = f"""<section class="hero">
   <div class="wrap narrow">
-    <h1>The Paul Higgins Playbooks</h1>
+    <h1>The PHM Playbooks</h1>
     <p>Step-by-step playbooks for SaaS partners (e.g. Salesforce, Zoho, Microsoft, Monday, NetSuite, Acumatica) building revenue outside their vendor. Drawn from 200+ SaaS partners mentored and 700+ podcast interviews.</p>
   </div>
 </section>
