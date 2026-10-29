@@ -33,5 +33,38 @@
     "tab": "t.0",
     "updated": "October 2026",
     "ghl_form_id": "xNAiVWtwiiaj7vkjiSJd"
+  },
+  {
+    "slug": "sales-call",
+    "title": "Sales Call",
+    "summary": "Run discovery calls that close without giving away free consulting: pre-qualify, a 30-minute discovery call, a paid scoping session and a proposal that holds its price.",
+    "source": "https://docs.google.com/document/d/1xZIycfKNhzbbkpmui4teCBp6InKDttCdwQzV45Oylbg/edit",
+    "tab": "t.0",
+    "updated": "October 2026"
+  },
+  {
+    "slug": "newsletter",
+    "title": "Newsletter",
+    "summary": "The seven-section weekly newsletter that turns readers who are not ready to book into replies and booked calls.",
+    "source": "https://docs.google.com/document/d/1q-4XNAsexRpQ-fcVpC5XTOpXYjcDgakjsOBgMfqAdSk/edit",
+    "tab": "t.0",
+    "updated": "June 2026"
+  },
+  {
+    "slug": "claude-for-business",
+    "title": "Claude for Business",
+    "summary": "Move from using Claude like a search engine to running it as your business operating system: profile, style, a coach Project, Skills and a weekly update loop.",
+    "source": "https://docs.google.com/document/d/1g6U5hoGLGqiDj_tSYixkpGMlzHEvMz1KvT3s6B3g8n8/edit",
+    "tab": "t.0",
+    "updated": "October 2026"
+  },
+  {
+    "slug": "youtube-channel",
+    "title": "YouTube Channel",
+    "summary": "Build a YouTube channel that captures inbound leads: competitor research, an eight-video content bank, search optimisation and a weekly routine.",
+    "source": "https://docs.google.com/document/d/1HWGm_ssKcGd8YeHC7Sd5tsksy7w3FAGepUQf-oTmZzk/edit",
+    "tab": "t.0",
+    "updated": "October 2026",
+    "draft": true
   }
 ]

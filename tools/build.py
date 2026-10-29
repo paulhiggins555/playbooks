@@ -14,7 +14,8 @@ OUT = ROOT / "public"
 year = str(datetime.date.today().year)
 header = (SRC / "partials" / "header.html").read_text()
 footer = (SRC / "partials" / "footer.html").read_text().replace("{{year}}", year)
-playbooks = json.loads((SRC / "playbooks.json").read_text())
+# "draft": true keeps a playbook off the site. A playbook without a ghl_form_id is published ungated.
+playbooks = [p for p in json.loads((SRC / "playbooks.json").read_text()) if not p.get("draft")]
 
 # Runs before paint so gated content never flashes for visitors without access.
 # A form that redirects back with ?access=1 (e.g. the GHL form's redirect URL) grants access.
@@ -65,7 +66,7 @@ def page(title, description, body, gated=False, extra=""):
 
 def build_index():
     cards = "\n".join(
-        f"""<a class="card" href="/playbooks/{p['slug']}/" data-slug="{p['slug']}">
+        f"""<a class="card" href="/playbooks/{p['slug']}/"{f' data-slug="{p["slug"]}"' if p.get("ghl_form_id") else ""}>
   <h3>{html.escape(p['title'])}</h3>
   <p>{html.escape(p['summary'])}</p>
   <span class="card-cta">Read the playbook &rarr;</span>
@@ -91,7 +92,7 @@ def build_index():
   <p>Enter your details to read it. You will also get new playbooks as they are published.</p>
 {{forms}}
 </dialog>"""
-    forms = "\n".join(f'<div class="modal-form" data-slug="{p["slug"]}" hidden>{ghl_form(p)}</div>' for p in playbooks)
+    forms = "\n".join(f'<div class="modal-form" data-slug="{p["slug"]}" hidden>{ghl_form(p)}</div>' for p in playbooks if p.get("ghl_form_id"))
     body = body.replace("{forms}", forms)
     write("playbooks/index.html", page(
         "Playbooks | Paul Higgins Mentoring",
@@ -103,6 +104,15 @@ def build_index():
 
 def build_playbook(p):
     content = (SRC / "content" / f"{p['slug']}.html").read_text()
+    gated = bool(p.get("ghl_form_id"))
+    gate = f"""<section class="section pb-gate">
+  <div class="wrap narrow">
+    <h2>Enter your details to read this playbook</h2>
+    <p>Free access. You will also get new playbooks as they are published.</p>
+    {ghl_form(p)}
+  </div>
+</section>
+""" if gated else ""
     body = f"""<section class="section pb-head">
   <div class="wrap narrow">
     <p class="back"><a href="/playbooks/">&larr; All playbooks</a></p>
@@ -111,20 +121,13 @@ def build_playbook(p):
     <p class="meta">By Paul Higgins &middot; Updated {html.escape(p['updated'])}</p>
   </div>
 </section>
-<section class="section pb-gate">
-  <div class="wrap narrow">
-    <h2>Enter your details to read this playbook</h2>
-    <p>Free access. You will also get new playbooks as they are published.</p>
-    {ghl_form(p)}
-  </div>
-</section>
-<section class="section pb-content">
+{gate}<section class="section pb-content">
   <div class="wrap narrow prose">
 {content}
   </div>
 </section>"""
     write(f"playbooks/{p['slug']}/index.html", page(
-        f"{p['title']} Playbook | Paul Higgins Mentoring", p["summary"], body, gated=True, extra=GHL_SCRIPT,
+        f"{p['title']} Playbook | Paul Higgins Mentoring", p["summary"], body, gated=gated, extra=GHL_SCRIPT if gated else "",
     ))
 
 
