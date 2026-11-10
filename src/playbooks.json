@@ -81,12 +81,13 @@
     "summary": "Set an annual revenue baseline, adjust it for weeks per month, and track one number every week: your percentage to monthly target.",
     "source": "https://docs.google.com/document/d/1seOPREQzICTrGVn-ZAnAYOBLs39qfef-c_KktcrBo-k/edit",
     "tab": "t.0",
-    "updated": "November 2026"
+    "updated": "November 2026",
+    "draft": true
   },
   {
     "slug": "ai-coach",
     "title": "AI Coach",
-    "summary": "Build an AI business coach in Claude that knows your decision sequence, flags your stuck patterns and pushes back when your answers are vague.",
+    "summary": "Build an AI business coach in Claude that knows your decision sequence, flags your stuck patterns and pushes back when you avoid a decision.",
     "source": "https://docs.google.com/document/d/1X7nzVLbVSfW4VEQ1qn5czV72MI774WVQ5C0shHRx0JA/edit",
     "tab": "t.0",
     "updated": "November 2026"
